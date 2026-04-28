@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>CamFlix – Christian Mason</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+:root{
+  --bg:#141414; --red:#e50914; --card:#222; --text:#e5e5e5;
+  --muted:#b3b3b3; --border:#333; --shadow:0 20px 40px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,Segoe UI,Roboto;color:var(--text);background:var(--bg)}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer}
+
+/* ===== INTRO ===== */
+.intro{
+  position:fixed; inset:0; background:black; z-index:9999;
+  display:grid; place-items:center; overflow:hidden;
+}
+.intro.hidden{display:none}
+.intro.fade{animation:fadeOut .7s ease forwards}
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
+.beam{
+  position:absolute; left:-20%; width:140%; height:10vh;
+  background:linear-gradient(90deg,transparent,var(--red),transparent);
+  animation:sweep 1.4s ease forwards;
+}
+.beam.b2{top:55%; animation-delay:.12s}
+.beam.b1{top:45%}
+@keyframes sweep{
+  from{opacity:0;transform:translateX(-20%) rotate(8deg)}
+  40%{opacity:1}
+  to{opacity:0;transform:translateX(30%) rotate(-6deg)}
+}
+.intro-logo{
+  font-size:clamp(2.5rem,6vw,4.5rem);
+  font-weight:900; letter-spacing:.2em;
+  text-shadow:0 0 40px rgba(229,9,20,.6);
+  animation:logoPop .9s ease .35s forwards;
+  opacity:0;
+}
+@keyframes logoPop{
+  60%{opacity:1;transform:scale(1.08)}
+  100%{opacity:1;transform:scale(1)}
+}
+.intro-skip{
+  position:absolute; top:20px; right:20px;
+  background:#fff2; color:#fff; border:1px solid #444;
+  border-radius:999px; padding:.4rem .8rem;
+}
+
+/* ===== NAV ===== */
+.nav{
+  position:sticky; top:0; z-index:50;
+  background:linear-gradient(black,transparent);
+  display:flex; align-items:center; gap:1rem; padding:.8rem 1rem;
+}
+.brand{font-weight:800; letter-spacing:.15em}
+.spacer{flex:1}
+.icon-btn{
+  background:#000; border:1px solid var(--border);
+  width:38px; height:38px; border-radius:50%;
+  color:#fff; font-size:1rem;
+}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:70vh; display:grid; align-items:end;
+  background:radial-gradient(circle at top right, #e5091440, black 70%);
+  padding:3rem;
+}
+.hero h1{font-size:clamp(1.8rem,3vw,3rem)}
+.hero p{max-width:60ch;color:var(--muted)}
+
+/* ===== PROJECTS ===== */
+.section{padding:1rem 1rem 2.5rem}
+.rail-title{font-weight:700;margin:.6rem 0}
+.rail{
+  display:grid; grid-auto-flow:column; grid-auto-columns:260px;
+  gap:.7rem; overflow-x:auto;
+}
+.card{
+  aspect-ratio:16/9; background:var(--card);
+  border-radius:6px; overflow:hidden;
+  position:relative; transition:.18s;
+  box-shadow:0 6px 18px rgba(0,0,0,.45);
+}
+.card:hover{
+  transform:scale(1.08);
+  box-shadow:var(--shadow);
+  z-index:3;
+}
+.poster{
+  display:grid; place-items:flex-end;
+  background-size:cover; background-position:center;
+  position:absolute; inset:0;
+}
+.poster span{
+  background:linear-gradient(90deg,black,transparent);
+  padding:.3rem .4rem; margin:.4rem; font-weight:700;
+}
+
+footer{text-align:center;padding:2rem;color:var(--muted)}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div class="intro hidden" id="intro">
+  <div class="beam b1"></div>
+  <div class="beam b2"></div>
+  <div class="intro-logo">CAMFLIX</div>
+  <button class="intro-skip" id="skipIntro">Skip</button>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="brand">CAMFLIX</div>
+  <button class="icon-btn" id="replayIntro">⟲</button>
+  <button class="icon-btn">🔇</button>
+  <div class="spacer"></div>
+  <div class="icon-btn">CM</div>
+</div>
+
+<section class="hero">
+  <div>
+    <h1>Christian Mason</h1>
+    <p>
+      email: cmason27@ccc-hs.org<br>
+      github: https://github.com/chris24902
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="rail-title">Projects</div>
+  <div class="rail" id="projects"></div>
+</section>
+
+<footer>
+  © <span id="year"></span> Christian Mason ·
+  https://github.com/chris24902
+</footer>
+
+<script>
+const ITEMS = [
+  {
+    title: "LAB 1",
+    img: "linear-gradient(135deg,#e50914,#b20710)",
+    link: "file:///C:/Users/S01389509/OneDrive - Cuyahoga Community College/IT2310 portfolio/lab1-intro.html"
+  },
+  {
+    title: "DEMO",
+    img: "linear-gradient(135deg,#2563eb,#0ea5e9)",
+    link: "file:///C:/Users/S01389509/OneDrive - Cuyahoga Community College/IT2310 portfolio/index.html"
+  },
+  {
+    title: "LAB 7",
+    img: "linear-gradient(135deg,#22c55e,#16a34a)",
+    link: "https://chris24902.github.io/it2310-portfolio/lab7-coffee.html"
+  },
+  {
+    title: "ABOUT ME",
+    img: "linear-gradient(135deg,#f59e0b,#ef4444)",
+    link: "file:///C:/Users/S01389509/Downloads/Document 3.pdf"
+  }
+];
+
+const intro = document.getElementById("intro");
+const skip = document.getElementById("skipIntro");
+const replay = document.getElementById("replayIntro");
+
+function showIntro(){
+  intro.classList.remove("hidden","fade");
+  setTimeout(hideIntro,2300);
+}
+function hideIntro(){
+  intro.classList.add("fade");
+  setTimeout(()=>intro.classList.add("hidden"),700);
+}
+skip.onclick = hideIntro;
+replay.onclick = showIntro;
+showIntro();
+
+/* Render projects */
+const rail = document.getElementById("projects");
+ITEMS.forEach(item=>{
+  const card=document.createElement("div");
+  card.className="card";
+  card.innerHTML=`
+    <div class="poster" style="background:${item.img}">
+      <span>${item.title}</span>
+    </div>
+  `;
+  if(item.link){
+    card.onclick = () => window.location.href = item.link;
+  }
+  rail.appendChild(card);
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
